@@ -438,6 +438,28 @@ h3 {
   max-width: 760px;
 }
 
+.about-intro {
+  display: grid;
+  gap: 1.35rem;
+}
+
+.about-photo {
+  margin: 0;
+  max-width: 320px;
+  overflow: hidden;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.about-photo img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 28%;
+}
+
 .credential-list {
   display: flex;
   flex-wrap: wrap;
