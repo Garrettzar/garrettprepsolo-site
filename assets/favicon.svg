@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="GarrettPrep">
+  <rect width="64" height="64" rx="10" fill="#fbfaf6"/>
+  <rect x="7" y="7" width="50" height="50" rx="8" fill="#ffffff" stroke="#2467a9" stroke-width="3"/>
+  <path d="M17 43c9-5 20-5 30 0" fill="none" stroke="#b9d7f4" stroke-width="5" stroke-linecap="round"/>
+  <text x="32" y="37" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#172033">GP</text>
+</svg>
