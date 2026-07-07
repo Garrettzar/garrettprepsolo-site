@@ -347,7 +347,6 @@ h3 {
   text-align: right;
 }
 
-.intro-section,
 .pricing-section {
   background: var(--bg);
 }
@@ -356,21 +355,13 @@ h3 {
   max-width: 680px;
 }
 
-.section-heading.narrow {
-  margin-bottom: 2rem;
-}
-
 .section-heading p {
   color: var(--muted);
   font-size: 1.06rem;
 }
 
-.card-grid {
-  display: grid;
-  gap: 1rem;
-}
-
-.info-card,
+.success-story,
+.mode-card,
 .pricing-card,
 .form-panel {
   background: var(--surface-strong);
@@ -379,19 +370,13 @@ h3 {
   box-shadow: 0 10px 28px rgba(23, 32, 51, 0.06);
 }
 
-.info-card {
-  min-height: 230px;
-  padding: 1.35rem;
-}
-
-.info-card p,
 .pricing-card p,
 .about-copy p,
-.step-list p {
+.step-list p,
+.success-story .story-label {
   color: var(--muted);
 }
 
-.card-number,
 .step-kicker,
 .pricing-label {
   display: inline-block;
@@ -415,6 +400,66 @@ h3 {
 .contact-grid {
   display: grid;
   gap: 2rem;
+}
+
+.plan-intro {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.success-story {
+  max-width: 430px;
+  padding: 1.25rem;
+  border-left: 5px solid var(--accent);
+}
+
+.score-jump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.4rem;
+}
+
+.score-jump span {
+  color: var(--ink);
+  font-size: 2.25rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.score-jump .score-arrow {
+  padding: 0.32rem 0.52rem;
+  background: var(--accent-soft);
+  border: 1px solid #c9dced;
+  border-radius: 999px;
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.story-label {
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.success-story blockquote {
+  margin: 0;
+}
+
+.success-story blockquote p {
+  margin-bottom: 0.8rem;
+  color: var(--ink);
+  font-size: 1.08rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.story-name {
+  margin: 0;
+  color: var(--accent-dark);
+  font-weight: 900;
 }
 
 .step-list {
@@ -460,23 +505,24 @@ h3 {
   object-position: 50% 28%;
 }
 
-.credential-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem;
+.tutoring-mode-grid {
+  display: grid;
+  gap: 0.9rem;
   margin: 1.6rem 0 0;
-  padding: 0;
-  list-style: none;
 }
 
-.credential-list li {
-  padding: 0.55rem 0.75rem;
-  background: var(--accent-soft);
-  border: 1px solid #c9dced;
-  border-radius: var(--radius);
-  color: var(--accent-dark);
-  font-size: 0.92rem;
-  font-weight: 800;
+.mode-card {
+  min-height: 118px;
+  padding: 1.25rem;
+  border-top: 5px solid var(--marker);
+}
+
+.mode-card h3 {
+  max-width: 260px;
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.25rem;
+  line-height: 1.18;
 }
 
 .pricing-card {
@@ -645,6 +691,15 @@ textarea[aria-invalid="true"] {
   .hero {
     padding-top: 3rem;
   }
+
+  .success-story,
+  .about-photo {
+    max-width: 100%;
+  }
+
+  .score-jump span {
+    font-size: 2rem;
+  }
 }
 
 @media (min-width: 700px) {
@@ -656,8 +711,8 @@ textarea[aria-invalid="true"] {
     font-size: 2.45rem;
   }
 
-  .card-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .tutoring-mode-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .footer-grid {
