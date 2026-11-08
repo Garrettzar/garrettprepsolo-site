@@ -1,132 +1,52 @@
-const header = document.querySelector("[data-header]");
-const navToggle = document.querySelector("[data-nav-toggle]");
-const nav = document.querySelector("[data-nav]");
-const navLinks = Array.from(document.querySelectorAll("[data-nav-link]"));
-const form = document.querySelector("#inquiry-form");
-const formError = document.querySelector("#form-error");
+"use strict";
+const config = window.GARRETTPREP_PRODUCT;
+document.querySelectorAll("[data-launch-cta]").forEach(link => {
+  link.textContent = config.ctaLabel;
+  link.href = config.ctaHref;
+});
+document.querySelectorAll("[data-availability]").forEach(el => el.textContent = config.availability);
+document.querySelectorAll("[data-fulfillment]").forEach(el => el.textContent = config.fulfillment);
 
-const getHeaderOffset = () => {
-  const height = header ? header.offsetHeight : 0;
-  return height + 16;
+// Preserve useful entry points from the former tutoring homepage.
+const legacyAnchors = { "#pricing": "#launch", "#contact": "#launch" };
+if (legacyAnchors[location.hash]) location.replace(legacyAnchors[location.hash]);
+
+const answerDescriptions = {
+  reading: "Answer B: harvest semicolon. Both sides are complete sentences. A semicolon connects them without a coordinating conjunction. Clue: If both halves can stand alone, a semicolon may connect them.",
+  math: "Answer C: 25. Add the two equations: 2x plus 3y plus 3x minus y equals 17 plus 8, so 5x plus 2y equals 25."
 };
-
-const closeMenu = () => {
-  if (!header || !navToggle) return;
-  header.classList.remove("is-open");
-  navToggle.setAttribute("aria-expanded", "false");
-  navToggle.setAttribute("aria-label", "Open navigation");
-};
-
-if (navToggle && header && nav) {
-  navToggle.addEventListener("click", () => {
-    const isOpen = header.classList.toggle("is-open");
-    navToggle.setAttribute("aria-expanded", String(isOpen));
-    navToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
-  });
-}
-
-document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener("click", (event) => {
-    const targetId = link.getAttribute("href");
-    if (!targetId || targetId === "#") return;
-
-    const target = document.querySelector(targetId);
-    if (!target) return;
-
-    event.preventDefault();
-    closeMenu();
-
-    window.scrollTo({
-      top: target.getBoundingClientRect().top + window.scrollY - getHeaderOffset(),
-      behavior: "smooth"
-    });
-
-    history.replaceState(null, "", targetId);
-    window.setTimeout(setActiveLink, 500);
+document.querySelectorAll("[data-flip]").forEach(button => {
+  const image = document.getElementById(button.getAttribute("aria-controls"));
+  const questionAlt = image.alt;
+  button.addEventListener("click", () => {
+    const showAnswer = button.getAttribute("aria-pressed") !== "true";
+    image.src = "assets/" + button.dataset.flip + (showAnswer ? "-back.webp" : "-front.webp");
+    image.alt = showAnswer ? answerDescriptions[button.dataset.flip] : questionAlt;
+    button.setAttribute("aria-pressed", String(showAnswer));
+    button.textContent = showAnswer ? "Back to the question ↗" : "See the answer ↗";
   });
 });
 
-const watchedSections = navLinks
-  .map((link) => document.querySelector(link.getAttribute("href")))
-  .filter(Boolean);
-
-const setActiveLink = () => {
-  let currentId = "";
-  const offset = getHeaderOffset() + 24;
-
-  watchedSections.forEach((section) => {
-    if (section.getBoundingClientRect().top <= offset) {
-      currentId = section.id;
-    }
-  });
-
-  navLinks.forEach((link) => {
-    link.classList.toggle("is-active", link.getAttribute("href") === `#${currentId}`);
-  });
-};
-
-let activeTicking = false;
-
-const requestActiveUpdate = () => {
-  if (activeTicking) return;
-  activeTicking = true;
-
-  window.requestAnimationFrame(() => {
-    setActiveLink();
-    activeTicking = false;
-  });
-};
-
-if (watchedSections.length) {
-  setActiveLink();
-  window.addEventListener("scroll", requestActiveUpdate, { passive: true });
-  window.addEventListener("resize", requestActiveUpdate);
-}
-
-const setFieldValidity = (field, isValid) => {
-  if (!field) return;
-  if (isValid) {
-    field.removeAttribute("aria-invalid");
-  } else {
-    field.setAttribute("aria-invalid", "true");
+const form = document.getElementById("launch-form");
+if (form) form.addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!form.reportValidity()) return;
+  const button = form.querySelector("button");
+  const status = document.getElementById("form-status");
+  button.disabled = true;
+  status.textContent = "Submitting…";
+  try {
+    const response = await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(new FormData(form)).toString()
+    });
+    if (!response.ok) throw new Error("Submission failed");
+    form.reset();
+    status.textContent = "You’re on the list. Thank you for being part of GarrettPrep!";
+  } catch {
+    status.textContent = "We couldn’t save your signup. Please try again, or email garrettprep@gmail.com.";
+  } finally {
+    button.disabled = false;
   }
-};
-
-const showError = (message) => {
-  if (!formError) return;
-  formError.textContent = message;
-  formError.hidden = false;
-};
-
-const clearError = () => {
-  if (!formError) return;
-  formError.textContent = "";
-  formError.hidden = true;
-};
-
-if (form) {
-  form.addEventListener("submit", (event) => {
-    clearError();
-
-    const email = form.elements.email;
-    const phone = form.elements.phone;
-    const emailValue = email.value.trim();
-    const phoneValue = phone.value.trim();
-    const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue);
-    const phoneDigits = phoneValue.replace(/\D/g, "");
-    const phoneIsValid = !phoneValue || phoneDigits.length >= 7;
-
-    setFieldValidity(email, emailIsValid);
-    setFieldValidity(phone, phoneIsValid);
-
-    if (!emailIsValid || !phoneIsValid) {
-      event.preventDefault();
-      showError(!emailIsValid
-        ? "Please enter a valid email address."
-        : "Please enter a phone number with at least 7 digits, or leave it blank.");
-
-      const firstInvalid = !emailIsValid ? email : phone;
-      firstInvalid.focus();
-    }
-  });
-}
+});
