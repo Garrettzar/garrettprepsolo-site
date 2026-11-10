@@ -11,19 +11,25 @@ document.querySelectorAll("[data-fulfillment]").forEach(el => el.textContent = c
 const legacyAnchors = { "#pricing": "#launch", "#contact": "#launch" };
 if (legacyAnchors[location.hash]) location.replace(legacyAnchors[location.hash]);
 
-const answerDescriptions = {
-  reading: "Answer B: harvest semicolon. Both sides are complete sentences. A semicolon connects them without a coordinating conjunction. Clue: If both halves can stand alone, a semicolon may connect them.",
-  math: "Answer C: 25. Add the two equations: 2x plus 3y plus 3x minus y equals 17 plus 8, so 5x plus 2y equals 25."
+// The card is the control: tap, click, Enter, or Space to turn it over.
+const cardLabels = {
+  reading: {
+    question: "Reading and Writing sample. The school garden doubled its tomato blank the gardeners used no additional water. Choices: A harvest comma, B harvest semicolon, C harvest comma however comma, D harvest semicolon and comma. Flip to see the answer.",
+    answer: "Reading and Writing answer: B, harvest semicolon. Both sides are complete sentences; a semicolon connects them without a coordinating conjunction. Clue: If both halves stand alone, a semicolon may connect them. Flip to return to the question."
+  },
+  math: {
+    question: "Math sample. If 2x plus 3y equals 17, and 3x minus y equals 8, what is 5x plus 2y? A 9, B 17, C 25, D 34. Flip to see the answer.",
+    answer: "Math answer: C, 25. Add the two equations to get 5x plus 2y equals 25. Flip to return to the question."
+  }
 };
-document.querySelectorAll("[data-flip]").forEach(button => {
-  const image = document.getElementById(button.getAttribute("aria-controls"));
-  const questionAlt = image.alt;
+document.querySelectorAll(".card-flip[data-flip]").forEach(button => {
+  const labels = cardLabels[button.dataset.flip];
+  if (!labels) return;
   button.addEventListener("click", () => {
-    const showAnswer = button.getAttribute("aria-pressed") !== "true";
-    image.src = "assets/" + button.dataset.flip + (showAnswer ? "-back.webp" : "-front.webp");
-    image.alt = showAnswer ? answerDescriptions[button.dataset.flip] : questionAlt;
-    button.setAttribute("aria-pressed", String(showAnswer));
-    button.textContent = showAnswer ? "Back to the question ↗" : "See the answer ↗";
+    const flipped = button.getAttribute("aria-pressed") !== "true";
+    button.setAttribute("aria-pressed", String(flipped));
+    button.setAttribute("aria-label", flipped ? labels.answer : labels.question);
+    button.classList.toggle("is-flipped", flipped);
   });
 });
 
