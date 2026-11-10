@@ -211,10 +211,57 @@ h3 {
   background:#dfe7da;
   border-radius:8px;
   padding:28px 45px}
-.card-stage img {
+.card-stage>img {
   width:100%;
   box-shadow:0 10px 18px #193f2820;
   border-radius:10px}
+.card-flip {
+  display:block;
+  width:100%;
+  aspect-ratio:525 / 750;
+  border:0;
+  padding:0;
+  background:transparent;
+  cursor:pointer;
+  position:relative;
+  perspective:1100px;
+  border-radius:10px}
+.card-flip-inner {
+  display:block;
+  width:100%;
+  height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform .65s cubic-bezier(.25,.75,.25,1)}
+.card-flip.is-flipped .card-flip-inner {
+  transform:rotateY(180deg)}
+.card-face {
+  display:block;
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  border-radius:10px;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden}
+.card-back {
+  transform:rotateY(180deg)}
+.card-face img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  box-shadow:0 10px 18px #193f2820;
+  border-radius:10px}
+.card-flip:hover .card-flip-inner {
+  filter:drop-shadow(0 4px 8px #193f2820)}
+.card-flip:focus-visible {
+  outline:3px solid var(--wine);
+  outline-offset:6px}
+.tap-instruction {
+  display:block;
+  color:var(--green);
+  font-size:13px;
+  font-weight:700;
+  margin-top:10px}
 .sample .eyebrow {
   margin-top:27px;
   margin-bottom:8px}
@@ -224,15 +271,6 @@ h3 {
 .sample>p:last-child {
   font-size:14px;
   color:var(--muted)}
-.flip {
-  background:none;
-  border:0;
-  border-bottom:1px solid var(--green);
-  padding:9px 0;
-  min-height:44px;
-  color:var(--green);
-  cursor:pointer;
-  font-size:13px}
 .game-caption {
   font-family:Georgia,serif;
   font-style:italic;
@@ -242,46 +280,59 @@ h3 {
   padding-top:9px}
 .testimonials {
   display:grid;
-  grid-template-columns:1.2fr 1fr;
-  gap:55px;
-  margin-top:40px}
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px;
+  margin-top:35px}
 .section-intro {
   max-width:600px;
   color:var(--muted)}
 .quote {
   margin:0;
   background:white;
-  padding:35px;
+  padding:32px;
   border-radius:6px;
   border:1px solid var(--line)}
-.quote-mark {
-  font-family:Georgia,serif;
+.quote-featured {
+  grid-column:1 / -1;
+  padding:40px;
+  background:#fffefa;
+  border-top:3px solid var(--wine)}
+.score-jump {
+  display:flex;
+  align-items:baseline;
+  gap:.22em;
+  margin:0;
   color:var(--wine);
-  font-size:65px;
-  line-height:1}
+  font-size:clamp(45px,6vw,68px);
+  letter-spacing:-2.5px;
+  line-height:1.12;
+  font-weight:780;
+  font-variant-numeric:tabular-nums}
+.score-jump .score-arrow {
+  color:var(--green);
+  font-weight:400;
+  font-size:.73em}
+.score-jump-secondary {
+  font-size:clamp(31px,3.4vw,43px);
+  letter-spacing:-1.8px}
+.score-caption {
+  margin:10px 0 24px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:600}
 .quote blockquote {
   font-family:Georgia,serif;
-  font-size:26px;
-  line-height:1.5;
+  font-size:19px;
+  line-height:1.55;
   margin:0 0 22px}
+.quote-featured blockquote {
+  font-size:clamp(20px,2.4vw,25px);
+  max-width:690px}
 .quote figcaption {
   font-weight:650;
   font-size:14px}
 .quote figcaption span {
   font-weight:400}
-.pending-grid {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px}
-.pending-grid article {
-  border-bottom:1px solid var(--line);
-  padding:25px 0}
-.pending-grid h3 {
-  font-size:18px;
-  margin-bottom:8px}
-.pending-grid p {
-  font-size:13px;
-  color:var(--muted)}
 .founder {
   background:#eee8de}
 .founder-grid {
@@ -295,18 +346,6 @@ h3 {
   width:100%;
   max-width:400px;
   border-radius:5px}
-.credentials {
-  display:flex;
-  gap:45px;
-  padding-top:20px;
-  border-top:1px solid #c8cdbf;
-  margin-top:30px;
-  font-size:12px}
-.credentials strong {
-  display:block;
-  font-size:34px;
-  color:var(--green);
-  font-weight:550}
 .faq {
   display:grid;
   grid-template-columns:.7fr 1.3fr;
@@ -447,7 +486,7 @@ h1 {
   gap:18px}
 .card-stage {
   padding:18px}
-.testimonials,.founder-grid,.faq,.launch-grid {
+.founder-grid,.faq,.launch-grid {
   grid-template-columns:1fr;
   gap:35px}
 .founder img {
@@ -460,6 +499,12 @@ footer {
   grid-template-columns:1fr 1fr}
 }
 
+@media(max-width:720px) {
+  .testimonials {
+    grid-template-columns:1fr}
+  .quote-featured {
+    grid-column:auto}
+}
 @media(max-width:540px) {
   .two,.card-grid {
   grid-template-columns:1fr}
@@ -498,6 +543,8 @@ footer {
 }
 
 @media(prefers-reduced-motion:reduce) {
+  .card-flip-inner {
+    transition:none}
   html {
   scroll-behavior:auto}
 }
