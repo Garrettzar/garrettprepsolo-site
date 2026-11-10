@@ -20,6 +20,10 @@ const cardLabels = {
   math: {
     question: "Math sample. If 2x plus 3y equals 17, and 3x minus y equals 8, what is 5x plus 2y? A 9, B 17, C 25, D 34. Flip to see the answer.",
     answer: "Math answer: C, 25. Add the two equations to get 5x plus 2y equals 25. Flip to return to the question."
+  },
+  game: {
+    question: "BACK AT YOU! gameplay card with a reversal arrow. Flip to see the GarrettPrep logo.",
+    answer: "GarrettPrep logo on the back of the BACK AT YOU! card. Flip to return to the front."
   }
 };
 document.querySelectorAll(".card-flip[data-flip]").forEach(button => {
