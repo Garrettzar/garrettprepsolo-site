@@ -44,3 +44,8 @@ Semantic headings, labeled form fields, required consent, skip link, keyboard fo
 - Founder: “Hi, I’m Garrett.” / “SAT tutor. Accounting and Finance student.” The oversized credential tiles are removed; credentials remain in the body copy.
 - FAQ heading spacing fixed; long gift/launch answers shortened. Redundant concept-footnote and score disclaimer copy removed, but purchase timing remains explicitly unconfirmed.
 - Before public release, reconfirm permissions for testimonials and verify physical product and delivery claims; approval is still required before merge.
+
+## November 11 — Tyler testimonial
+- Tyler's quoted website excerpt is his second sentence, reproduced as submitted: “With your help, I was able to excel in specific reading sections including standard English conventions, and craft and structure.”
+- Displayed score improvement is overall SAT 1050 → 1300, distinct from the Reading & Writing section improvement he describes. Three supporting testimonial cards now sit in one row on desktop, stacking on smaller screens.
+- Obtain or retain written permission to display his statement and score before production merge. No changes to main or live checkout.
