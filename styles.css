@@ -300,7 +300,7 @@ h3 {
   padding-top:9px}
 .testimonials {
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(3,minmax(0,1fr));
   gap:22px;
   margin-top:35px}
 .section-intro {
@@ -519,7 +519,7 @@ footer {
   grid-template-columns:1fr 1fr}
 }
 
-@media(max-width:720px) {
+@media(max-width:900px) {
   .testimonials {
     grid-template-columns:1fr}
   .quote-featured {
