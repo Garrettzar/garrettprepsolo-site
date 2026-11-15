@@ -22,8 +22,8 @@ const cardLabels = {
     answer: "Math answer: C, 25. Add the two equations to get 5x plus 2y equals 25. Flip to return to the question."
   },
   game: {
-    question: "Black BACK AT YOU! gameplay card with a reversal arrow. Flip to see the GarrettPrep wordmark.",
-    answer: "GarrettPrep wordmark on the black back of the BACK AT YOU! card. Flip to return to the front."
+    question: "White BACK AT YOU! gameplay card with a black reversal arrow and border. Flip to see the GarrettPrep wordmark.",
+    answer: "GarrettPrep wordmark in black on the white back of the BACK AT YOU! card. Flip to return to the front."
   }
 };
 document.querySelectorAll(".card-flip[data-flip]").forEach(button => {
