@@ -1,4 +1,16 @@
+@font-face {
+  font-family:"Comic Neue";
+  src:url("assets/comic-neue-400.woff2") format("woff2");
+  font-weight:400;
+  font-display:swap}
+@font-face {
+  font-family:"Comic Neue";
+  src:url("assets/comic-neue-700.woff2") format("woff2");
+  font-weight:700;
+  font-display:swap}
+
 :root {
+  --card-flip-motion:transform .68s cubic-bezier(.2,.72,.2,1);
   --cream:#f8f5ee;
   --ink:#243b30;
   --green:#165a38;
@@ -84,11 +96,31 @@ nav a {
   padding:11px 19px}
 .hero {
   display:grid;
-  grid-template-columns:1.1fr .9fr;
-  align-items:center;
-  gap:70px;
-  padding-top:60px;
-  padding-bottom:65px}
+  grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
+  grid-template-areas:"copy preview" "action preview";
+  grid-template-rows:1fr auto;
+  column-gap:clamp(32px,6vw,94px);
+  row-gap:24px;
+  padding-top:clamp(40px,6vw,86px);
+  padding-bottom:clamp(40px,6vw,86px)}
+.hero-copy {
+  grid-area:copy;
+  align-self:end}
+.hero-action {
+  grid-area:action;
+  justify-self:start;
+  align-self:start}
+.hero-invitation {
+  max-width:480px;
+  border-top:1px solid var(--line);
+  padding-top:18px}
+.hero-invitation h2 {
+  font-size:clamp(20px,2.4vw,30px);
+  letter-spacing:-.025em;
+  margin:0 0 5px}
+.hero-invitation p {
+  margin:0;
+  color:var(--muted)}
 .eyebrow {
   font-size:11px;
   letter-spacing:1.65px;
@@ -136,21 +168,22 @@ h3 {
   font-size:12px;
   color:var(--muted);
   margin-top:14px}
-.hero-art {
+.preview-stage {
+  grid-area:preview;
+  align-self:center;
+  display:grid;
+  place-items:center;
   margin:0;
-  position:relative;
-  background:#f1eae0;
-  border-radius:16px;
-  overflow:hidden}
-.hero-art img {
-  width:100%;
-  max-height:620px;
-  object-fit:contain}
-.hero-art figcaption {
-  text-align:center;
-  font-size:11px;
-  padding:8px 12px 14px;
-  color:var(--muted)}
+  padding:clamp(24px,3vw,42px);
+  border:1px solid #d4decf;
+  border-radius:18px;
+  background:#e6ece1;
+  background-image:radial-gradient(#165a3821 .7px,transparent .7px);
+  background-size:12px 12px}
+.preview-stage img {
+  width:min(100%,262px);
+  border-radius:17px;
+  box-shadow:0 15px 26px #233c3033}
 .deck-count {
   background:var(--green);
   color:white;
@@ -198,14 +231,38 @@ h3 {
 .section-top>p {
   max-width:340px}
 .inside .section-top {
-  display:block;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(180px,.48fr);
+  align-items:center;
+  gap:24px;
   margin-bottom:40px}
 .inside .inside-headline {
-  font-size:clamp(52px,5.8vw,78px);
+  font-size:clamp(38px,5.4vw,72px);
   line-height:1.08;
   letter-spacing:-.055em;
-  white-space:nowrap;
   margin:0}
+.inside .section-top p:last-child {
+  margin:10px 0 0;
+  color:var(--muted)}
+.deck-art {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:center;
+  padding:14px 18px;
+  margin:0}
+.deck-art img {
+  width:111%;
+  max-width:none;
+  border-radius:8%;
+  box-shadow:0 8px 15px #1f342e38}
+.deck-art img:first-child {
+  transform:rotate(-10deg) translateX(2%)}
+.deck-art img:nth-child(2) {
+  z-index:1;
+  transform:translate(-6%,-5%)}
+.deck-art img:last-child {
+  z-index:2;
+  transform:rotate(10deg) translateX(1%)}
 .card-grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -218,6 +275,8 @@ h3 {
   width:100%;
   box-shadow:0 10px 18px #193f2820;
   border-radius:10px}
+.card-flip,.quiz-card {
+  perspective:1100px}
 .card-flip {
   display:block;
   width:100%;
@@ -227,28 +286,29 @@ h3 {
   background:transparent;
   cursor:pointer;
   position:relative;
-  perspective:1100px;
   border-radius:10px}
+.card-flip-inner,.quiz-sides {
+  transform-style:preserve-3d;
+  -webkit-transform-style:preserve-3d}
 .card-flip-inner {
   display:block;
   width:100%;
   height:100%;
   position:relative;
-  transform-style:preserve-3d;
-  -webkit-transform-style:preserve-3d;
-  transition:transform .68s cubic-bezier(.2,.72,.2,1)}
-.card-flip.is-flipped .card-flip-inner {
+  transition:var(--card-flip-motion)}
+.card-flip.is-flipped .card-flip-inner,.quiz-card.is-revealed .quiz-sides {
   transform:rotateY(180deg)}
 .card-face {
   display:block;
   position:absolute;
   inset:0;
-  border-radius:10px;
+  border-radius:10px}
+.card-face,.quiz-front,.quiz-back {
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden}
 .card-front {
   transform:rotateY(0deg)}
-.card-back {
+.card-back,.quiz-back {
   transform:rotateY(180deg)}
 .card-face img {
   width:100%;
@@ -469,6 +529,272 @@ footer .brand {
 .document h1 {
   font-size:46px}
 
+.challenge-main {
+  max-width:900px;
+  min-height:70vh;
+  padding:clamp(28px,5vw,54px) 0 28px}
+.challenge-main > h1 {
+  text-align:center;
+  font-size:clamp(36px,6vw,62px);
+  letter-spacing:-.045em;
+  margin:0 0 22px}
+#round {
+  max-width:356px;
+  margin-inline:auto}
+.round-progress {
+  display:grid;
+  gap:8px;
+  margin-bottom:14px;
+  font-size:14px;
+  font-weight:700;
+  color:var(--green)}
+.round-progress progress {
+  width:100%;
+  height:8px;
+  border:0;
+  border-radius:10px;
+  overflow:hidden;
+  background:#dce5d9;
+  accent-color:var(--green)}
+.round-progress progress::-webkit-progress-bar {
+  background:#dce5d9}
+.round-progress progress::-webkit-progress-value {
+  background:var(--green)}
+.quiz-card {
+  --card-border:clamp(7px,2.1vw,11px);
+  position:relative;
+  border-radius:19px;
+  color:#181818;
+  font:400 clamp(19px,5.7vw,24px)/1.3 "Comic Neue","Comic Sans MS",system-ui,sans-serif}
+.quiz-sides {
+  display:grid;
+  aspect-ratio:7 / 10;
+  transform:rotateY(0deg)}
+.quiz-card.is-animated .quiz-sides {
+  transition:var(--card-flip-motion)}
+.quiz-front,.quiz-back {
+  display:flex;
+  flex-direction:column;
+  grid-area:1 / 1;
+  min-width:0;
+  border:var(--card-border) solid var(--card-color);
+  border-radius:19px;
+  padding:clamp(10px,3.25vw,17px);
+  background:#fff;
+  box-shadow:0 8px 20px #233c301f}
+.quiz-front {
+  --card-color:#153c69;
+  --card-tint:#edf3f8}
+.quiz-back {
+  --card-color:#7d5e00;
+  --card-tint:#fdf8e9}
+.quiz-card.is-reading .quiz-front {
+  --card-color:var(--wine);
+  --card-tint:#f9eef0}
+.quiz-card.is-reading .quiz-back {
+  --card-color:#12563b;
+  --card-tint:#eff7f1}
+.quiz-flip {
+  position:absolute;
+  inset:0;
+  z-index:1;
+  border:0;
+  border-radius:inherit;
+  background:transparent;
+  cursor:pointer}
+.quiz-meta {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:start;
+  gap:4px 8px;
+  margin-bottom:5px}
+#topic {
+  justify-self:start;
+  padding-bottom:4px;
+  border-bottom:2px solid var(--card-color);
+  color:var(--card-color);
+  font-size:clamp(22px,7vw,29px);
+  font-weight:700;
+  line-height:1.02;
+  text-transform:uppercase}
+#topic.is-long {
+  font-size:clamp(14px,4vw,18px)}
+#card-number,#subject {
+  font-size:12px}
+#card-number {
+  white-space:nowrap}
+#subject {
+  grid-column:1 / -1}
+#prompt {
+  margin:0 0 18px;
+  font-size:inherit;
+  font-weight:400;
+  line-height:inherit;
+  letter-spacing:0}
+.answer-options {
+  display:grid;
+  gap:4px;
+  margin:auto 0 clamp(14px,4.5vw,23px)}
+.answer-option {
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  min-height:48px;
+  padding:6px;
+  border:1px solid transparent;
+  border-radius:6px;
+  cursor:pointer;
+  line-height:1.22}
+.answer-option input {
+  position:absolute;
+  width:1px;
+  height:1px;
+  opacity:0}
+.answer-letter {
+  flex:0 0 16px;
+  color:var(--card-color);
+  font-weight:700}
+@media(hover:hover) {
+  .answer-option:hover {
+    border-color:var(--card-color);
+    background:var(--card-tint)}
+}
+.answer-option:has(input:focus-visible) {
+  outline:3px solid #b86a15;
+  outline-offset:2px}
+.answer-option:has(input:checked) {
+  border-color:var(--card-color);
+  background:var(--card-tint);
+  box-shadow:inset 0 0 0 1px var(--card-color)}
+.quiz-action {
+  width:100%;
+  margin-top:14px;
+  padding-block:10px}
+.quiz-action:disabled {
+  background:#e7e3db;
+  border-color:#d4cec2;
+  color:#554e44;
+  cursor:default;
+  opacity:1}
+.challenge-page [hidden] {
+  display:none}
+.quiz-back {
+  justify-content:space-between;
+  gap:18px}
+.card-answer {
+  display:grid;
+  gap:3px;
+  margin:0 0 5px;
+  padding-bottom:14px;
+  border-bottom:2px solid var(--card-color);
+  color:var(--card-color);
+  font-size:clamp(29px,9vw,43px);
+  font-weight:700;
+  line-height:1.05;
+  letter-spacing:0;
+  text-align:center}
+.card-answer-label,.quiz-back h3 {
+  color:var(--card-color);
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:0;
+  text-transform:uppercase}
+#correct-answer.is-short {
+  font-size:clamp(40px,13vw,54px)}
+.quiz-back h3 {
+  margin:0 0 5px}
+.quiz-back p {
+  margin:0}
+.clue {
+  padding:10px;
+  border:1px solid var(--card-color);
+  border-radius:7px;
+  background:var(--card-tint);
+  font-size:16px}
+.answer-outcome {
+  margin:10px 0 0;
+  color:var(--wine);
+  font-size:14px;
+  font-weight:700;
+  text-align:center}
+.answer-outcome.is-correct {
+  color:var(--green);
+}
+.visually-hidden {
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip-path:inset(50%);
+  white-space:nowrap}
+[tabindex="-1"] {
+  scroll-margin-top:16px}
+html:has(.challenge-page) {
+  scroll-padding-top:0}
+.results {
+  display:grid;
+  gap:18px}
+.score-panel {
+  text-align:center;
+  padding:clamp(20px,4vw,38px);
+  background:#fffefa;
+  border:1px solid var(--line);
+  border-top:4px solid var(--wine);
+  border-radius:12px}
+.result-score {
+  font-size:clamp(22px,4vw,34px);
+  font-weight:750;
+  color:var(--wine);
+  margin-bottom:3px}
+.score-panel h2 {
+  margin-bottom:12px;
+  font-family:Georgia,serif;
+  font-size:clamp(28px,4.5vw,44px);
+  letter-spacing:-.03em}
+.score-panel > p:not(.result-score) {
+  max-width:52ch;
+  margin-inline:auto}
+.result-actions {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px}
+.result-actions .button,.results-deck .button {
+  padding:10px 18px}
+.button-outline {
+  background:transparent;
+  color:var(--wine)}
+.button-outline:hover {
+  background:#f9eef0}
+#share-status {
+  margin:8px 0 0}
+#share-status:empty {
+  margin:0}
+#share-url {
+  display:block;
+  width:min(100%,30ch);
+  margin:6px auto;
+  padding:8px}
+.results-deck {
+  display:grid;
+  grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
+  align-items:center;
+  gap:16px;
+  padding:clamp(20px,4vw,32px);
+  background:#e8eee2;
+  border-radius:12px;
+  border:1px solid #cedac9}
+.results-deck h3 {
+  margin-bottom:10px}
+.challenge-footer {
+  display:flex;
+  justify-content:center;
+  padding:20px 0 30px;
+  color:var(--muted)}
+
 @media(max-width:800px) {
   .wrap {
   width:calc(100% - 40px)}
@@ -478,26 +804,28 @@ footer .brand {
   font-size:20px}
 nav {
   gap:12px}
-nav>a:not(.button) {
+nav>a:not(.button):not(.back-home):not(.nav-challenge) {
   display:none}
 .button.small {
   font-size:12px;
   padding:10px 12px}
 .hero {
-  gap:30px;
-  padding-top:35px;
-  grid-template-columns:1fr}
+  gap:16px;
+  padding-top:28px;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-areas:"copy" "preview" "action"}
 .hero-copy {
   max-width:560px}
+.hero-action {
+  width:100%}
+.preview-stage {
+  padding:12px}
+.preview-stage img {
+  width:min(100%,174px);
+  border-radius:10px}
 h1 {
   font-size:56px;
   letter-spacing:-2.5px}
-.hero-art {
-  max-width:440px;
-  width:100%;
-  margin:auto}
-.hero-art img {
-  max-height:500px}
 .section {
   padding-top:65px;
   padding-bottom:65px}
@@ -546,18 +874,40 @@ footer {
   width:100%}
 .sample+.sample {
   margin-top:25px}
-.hero .eyebrow {
-  font-size:10px}
-.hero .lead {
-  font-size:16px}
+.nav {
+  min-height:62px;
+  gap:10px}
+.nav .nav-challenge {
+  display:none}
+.hero h1 {
+  font-size:clamp(36px,10vw,49px);
+  letter-spacing:-.055em;
+  margin-bottom:13px}
+.hero h1 em {
+  white-space:nowrap}
+.hero-invitation {
+  padding-top:11px}
+.hero-invitation p {
+  font-size:14px}
+.hero-action {
+  gap:12px;
+  padding:11px 8px}
 h1 {
   font-size:49px}
 .product-name {
   font-size:18px}
 .tagline {
-  font-size:18px}
-.hero-art img {
-  max-height:410px}
+  font-size:18px;
+  margin-bottom:13px}
+.inside .section-top,.results-deck {
+  grid-template-columns:minmax(0,1fr)}
+.inside .deck-art,.results-deck .deck-art {
+  width:min(100%,250px);
+  justify-self:center}
+.result-actions > .button {
+  flex:1 1 auto}
+.results-deck .button {
+  width:100%}
 .quote {
   padding:25px}
 .quote blockquote {
@@ -565,15 +915,13 @@ h1 {
 footer {
   grid-template-columns:1fr;
   gap:15px}
-.deck-count strong span {
-  display:block}
 .brand img {
   width:32px;
   height:32px}
 }
 
 @media(prefers-reduced-motion:reduce) {
-  .card-flip-inner {
+  .card-flip-inner,.quiz-card.is-animated .quiz-sides {
     transition:none}
   html {
   scroll-behavior:auto}

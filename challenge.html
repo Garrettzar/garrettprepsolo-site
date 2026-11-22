@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Free SAT Challenge | GarrettPrep</title>
+  <meta name="description" content="Think you can beat your teen on the SAT? Try five GarrettPrep Math and Reading &amp; Writing questions and challenge your family.">
+  <meta property="og:title" content="Can you beat my score? | GarrettPrep SAT Challenge">
+  <meta property="og:description" content="Five questions. Two minutes. Bragging rights on the line.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#165a38">
+  <link rel="canonical" href="https://garrettprep.com/challenge.html">
+  <link rel="icon" href="assets/garrettprep-favicon.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="product-config.js" defer></script>
+  <script src="challenge-questions.js" defer></script>
+  <script src="challenge.js" defer></script>
+</head>
+<body class="challenge-page">
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="./">
+        <img src="assets/garrettprep-favicon.png" alt="" width="42" height="42">
+        <span>GarrettPrep</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a class="back-home" href="./"><span aria-hidden="true">←</span> Home</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap challenge-main" id="main">
+    <h1>Free SAT <em>Challenge.</em></h1>
+    <noscript><p>Turn on JavaScript to play the challenge.</p></noscript>
+    <section id="round" aria-label="Question" hidden>
+      <div class="round-progress">
+        <span id="question-count"></span>
+        <progress id="progress" max="5" aria-label="Questions answered"></progress>
+      </div>
+      <article class="quiz-card" id="quiz-card">
+        <div class="quiz-sides">
+          <form class="quiz-front" id="answer-form">
+            <div class="quiz-meta">
+              <span id="topic"></span>
+              <span id="card-number"></span>
+              <span id="subject"></span>
+            </div>
+            <h2 id="prompt" tabindex="-1"></h2>
+            <div class="answer-options" id="answers" role="radiogroup" aria-labelledby="prompt"></div>
+          </form>
+          <div class="quiz-back" id="feedback" hidden>
+            <h2 class="card-answer" id="feedback-title" tabindex="-1">
+              <span class="card-answer-label" aria-hidden="true">Answer</span>
+              <span class="visually-hidden" id="answer-announcement"></span>
+              <span id="correct-answer"></span>
+            </h2>
+            <div>
+              <h3>Why?</h3>
+              <p id="explanation"></p>
+            </div>
+            <div class="clue">
+              <h3>Clue</h3>
+              <p id="clue"></p>
+            </div>
+          </div>
+        </div>
+        <button class="quiz-flip" id="quiz-flip" type="button" aria-label="Flip to the question" hidden></button>
+      </article>
+      <p class="answer-outcome" id="answer-outcome" aria-hidden="true" hidden></p>
+      <button class="button quiz-action" id="check-answer" type="submit" form="answer-form" disabled>Check Answer</button>
+      <button class="button quiz-action" id="next" type="button" hidden>Next Question</button>
+    </section>
+    <section id="results" class="results" aria-labelledby="result-title" hidden>
+      <div class="score-panel">
+        <p class="result-score" id="result-score"></p>
+        <h2 id="result-title" tabindex="-1"></h2>
+        <p id="takeaway"></p>
+        <p>Think someone at your table can beat you?</p>
+        <div class="result-actions">
+          <button class="button" id="share" type="button">Challenge Someone</button>
+          <button class="button button-outline" id="replay" type="button">Play Again</button>
+        </div>
+        <p id="share-status" role="status"></p>
+        <label id="share-fallback" hidden>Copy this challenge link
+          <input id="share-url" type="url" readonly>
+        </label>
+      </div>
+      <article class="results-deck">
+        <div>
+          <h3>Take the challenge to the table.</h3>
+          <p>The 120-card GarrettPrep SAT Prep Deck makes a gift for teens and a screen-free game for the family. Study solo or play together, with answers, explanations, and clues on the study cards.</p>
+          <a class="button" id="product-cta" href="./#launch">Join the Waitlist <span aria-hidden="true">→</span></a>
+        </div>
+        <figure class="deck-art" aria-label="GarrettPrep study and gameplay card artwork">
+          <img src="assets/reading-front.webp" width="525" height="750" alt="" loading="lazy">
+          <img src="assets/game-front-v4.webp" width="525" height="750" alt="" loading="lazy">
+          <img src="assets/math-front.webp" width="525" height="750" alt="" loading="lazy">
+        </figure>
+      </article>
+    </section>
+  </main>
+  <footer class="wrap challenge-footer">
+    <a href="./#inside">Explore the deck</a>
+    <a href="privacy.html">Privacy</a>
+  </footer>
+</body>
+</html>
