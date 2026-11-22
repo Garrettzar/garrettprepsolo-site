@@ -90,7 +90,7 @@ function renderQuestion(moveFocus) {
   get("question-count").textContent = `Question ${attempt.index + 1} of ${size}`;
   get("progress").value = attempt.submitted.length;
   card.classList.toggle("is-reading", question.subject === "Reading & Writing");
-  card.classList.remove("is-checked");
+  feedback.hidden = true;
   flip.hidden = true;
   get("subject").textContent = question.subject;
   const topic = get("topic");
@@ -123,17 +123,17 @@ function renderQuestion(moveFocus) {
   if (moveFocus) prompt.focus();
 }
 
-function showCardSide(showAnswer) {
+function showCardSide(showAnswer, animate = false) {
+  card.classList.toggle("is-animated", animate);
   card.classList.toggle("is-revealed", showAnswer);
-  form.hidden = showAnswer;
-  feedback.hidden = !showAnswer;
+  form.inert = showAnswer;
+  feedback.inert = !showAnswer;
   flip.setAttribute("aria-label", showAnswer ? "Flip to the question" : "Flip to the answer");
 }
 
 function reveal(question, moveFocus) {
   const choice = attempt.submitted[attempt.index];
   const correct = choice === question.answer;
-  card.classList.add("is-checked");
   answers.querySelectorAll("input").forEach(input => { input.disabled = true; });
   get("progress").value = attempt.submitted.length;
   get("answer-announcement").textContent = correct
@@ -147,7 +147,8 @@ function reveal(question, moveFocus) {
   next.textContent = attempt.index === size - 1 ? "See Results" : "Next Question";
   outcome.textContent = correct ? "Correct!" : `Incorrect · You chose ${letters[choice]}`;
   outcome.classList.toggle("is-correct", correct);
-  showCardSide(true);
+  feedback.hidden = false;
+  showCardSide(true, moveFocus);
   flip.hidden = false;
   check.hidden = true;
   outcome.hidden = false;
@@ -156,7 +157,7 @@ function reveal(question, moveFocus) {
 }
 
 flip.addEventListener("click", () => {
-  showCardSide(!card.classList.contains("is-revealed"));
+  showCardSide(!card.classList.contains("is-revealed"), true);
 });
 
 function renderResults(moveFocus) {

@@ -38,28 +38,30 @@
         <progress id="progress" max="5" aria-label="Questions answered"></progress>
       </div>
       <article class="quiz-card" id="quiz-card">
-        <form class="quiz-front" id="answer-form">
-          <div class="quiz-meta">
-            <span id="topic"></span>
-            <span id="card-number"></span>
-            <span id="subject"></span>
-          </div>
-          <h2 id="prompt" tabindex="-1"></h2>
-          <div class="answer-options" id="answers" role="radiogroup" aria-labelledby="prompt"></div>
-        </form>
-        <div class="quiz-back" id="feedback" hidden>
-          <h2 class="card-answer" id="feedback-title" tabindex="-1">
-            <span class="card-answer-label" aria-hidden="true">Answer</span>
-            <span class="visually-hidden" id="answer-announcement"></span>
-            <span id="correct-answer"></span>
-          </h2>
-          <div>
-            <h3>Why?</h3>
-            <p id="explanation"></p>
-          </div>
-          <div class="clue">
-            <h3>Clue</h3>
-            <p id="clue"></p>
+        <div class="quiz-sides">
+          <form class="quiz-front" id="answer-form">
+            <div class="quiz-meta">
+              <span id="topic"></span>
+              <span id="card-number"></span>
+              <span id="subject"></span>
+            </div>
+            <h2 id="prompt" tabindex="-1"></h2>
+            <div class="answer-options" id="answers" role="radiogroup" aria-labelledby="prompt"></div>
+          </form>
+          <div class="quiz-back" id="feedback" hidden>
+            <h2 class="card-answer" id="feedback-title" tabindex="-1">
+              <span class="card-answer-label" aria-hidden="true">Answer</span>
+              <span class="visually-hidden" id="answer-announcement"></span>
+              <span id="correct-answer"></span>
+            </h2>
+            <div>
+              <h3>Why?</h3>
+              <p id="explanation"></p>
+            </div>
+            <div class="clue">
+              <h3>Clue</h3>
+              <p id="clue"></p>
+            </div>
           </div>
         </div>
         <button class="quiz-flip" id="quiz-flip" type="button" aria-label="Flip to the question" hidden></button>
