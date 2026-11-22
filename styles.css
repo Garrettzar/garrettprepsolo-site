@@ -1,3 +1,14 @@
+@font-face {
+  font-family:"Comic Neue";
+  src:url("assets/comic-neue-400.woff2") format("woff2");
+  font-weight:400;
+  font-display:swap}
+@font-face {
+  font-family:"Comic Neue";
+  src:url("assets/comic-neue-700.woff2") format("woff2");
+  font-weight:700;
+  font-display:swap}
+
 :root {
   --cream:#f8f5ee;
   --ink:#243b30;
@@ -161,60 +172,17 @@ h3 {
   align-self:center;
   display:grid;
   place-items:center;
-  padding:clamp(24px,4vw,52px);
+  margin:0;
+  padding:clamp(24px,3vw,42px);
   border:1px solid #d4decf;
   border-radius:18px;
   background:#e6ece1;
   background-image:radial-gradient(#165a3821 .7px,transparent .7px);
   background-size:12px 12px}
-.question-preview {
-  width:min(100%,345px);
-  padding:clamp(16px,2.5vw,28px);
-  color:#20394f;
-  background:#fffefa;
-  border:5px solid #173f65;
+.preview-stage img {
+  width:min(100%,262px);
   border-radius:17px;
-  box-shadow:5px 6px 0 #b2bfac,0 18px 28px #233c3022}
-.preview-header,.quiz-meta {
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  justify-content:space-between;
-  column-gap:12px;
-  border-bottom:1px solid currentColor;
-  padding-bottom:8px;
-  margin-bottom:14px}
-.preview-header h2 {
-  margin:0;
-  font-size:clamp(17px,2.2vw,26px);
-  font-weight:750;
-  letter-spacing:.045em;
-  text-transform:uppercase}
-.preview-header span {
-  font-size:13px;
-  font-weight:650}
-.question-preview > p {
-  margin-bottom:16px;
-  color:var(--ink);
-  font-size:clamp(16px,1.6vw,21px);
-  line-height:1.45}
-.preview-choices {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:8px;
-  padding:0;
-  margin:0;
-  list-style:none}
-.preview-choices li {
-  display:flex;
-  gap:10px;
-  align-items:center;
-  padding:5px 10px;
-  border:1px solid #d6e0e6;
-  border-radius:6px}
-.preview-choices span {
-  font-size:13px;
-  font-weight:750}
+  box-shadow:0 15px 26px #233c3033}
 .deck-count {
   background:var(--green);
   color:white;
@@ -282,17 +250,18 @@ h3 {
   padding:14px 18px;
   margin:0}
 .deck-art img {
-  width:124%;
+  width:111%;
   max-width:none;
   border-radius:8%;
   box-shadow:0 8px 15px #1f342e38}
 .deck-art img:first-child {
-  transform:rotate(-12deg) translateX(8%)}
+  transform:rotate(-10deg) translateX(2%)}
 .deck-art img:nth-child(2) {
   z-index:1;
-  transform:translate(-10%,-5%)}
+  transform:translate(-6%,-5%)}
 .deck-art img:last-child {
-  transform:rotate(12deg) translateX(-25%)}
+  z-index:2;
+  transform:rotate(10deg) translateX(1%)}
 .card-grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -566,7 +535,7 @@ footer .brand {
   letter-spacing:-.045em;
   margin:0 0 22px}
 #round {
-  max-width:640px;
+  max-width:356px;
   margin-inline:auto}
 .round-progress {
   display:grid;
@@ -588,91 +557,95 @@ footer .brand {
 .round-progress progress::-webkit-progress-value {
   background:var(--green)}
 .quiz-card {
-  --subject:#173f65;
-  --subject-tint:#edf3f8;
-  border:4px solid var(--subject);
-  border-radius:16px;
-  padding:clamp(16px,4vw,32px);
-  background:#fffefa;
-  box-shadow:0 10px 24px #233c3014}
+  --card-color:#153c69;
+  --card-tint:#edf3f8;
+  display:grid;
+  aspect-ratio:7 / 10;
+  border:clamp(7px,2.1vw,11px) solid var(--card-color);
+  border-radius:19px;
+  padding:clamp(10px,3.25vw,17px);
+  background:#fff;
+  color:#181818;
+  font:400 clamp(19px,5.7vw,24px)/1.3 "Comic Neue","Comic Sans MS",system-ui,sans-serif;
+  box-shadow:0 8px 20px #233c301f}
 .quiz-card.is-reading {
-  --subject:var(--wine);
-  --subject-tint:#f9eef0}
+  --card-color:var(--wine);
+  --card-tint:#f9eef0}
+.quiz-card.is-revealed {
+  --card-color:#7d5e00;
+  --card-tint:#fdf8e9}
+.quiz-card.is-reading.is-revealed {
+  --card-color:#12563b;
+  --card-tint:#eff7f1}
+.quiz-front,.quiz-back {
+  display:flex;
+  flex-direction:column;
+  min-width:0}
 .quiz-meta {
-  justify-content:flex-start;
-  color:var(--subject);
-  row-gap:4px;
-  font-size:13px}
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:start;
+  gap:4px 8px;
+  margin-bottom:5px}
+#topic {
+  justify-self:start;
+  padding-bottom:4px;
+  border-bottom:2px solid var(--card-color);
+  color:var(--card-color);
+  font-size:clamp(22px,7vw,29px);
+  font-weight:700;
+  line-height:1.02;
+  text-transform:uppercase}
+#topic.is-long {
+  font-size:clamp(14px,4vw,18px)}
+#card-number,#subject {
+  font-size:12px}
+#card-number {
+  white-space:nowrap}
 #subject {
-  font-weight:750;
-  text-transform:uppercase;
-  letter-spacing:.075em}
+  grid-column:1 / -1}
 #prompt {
-  margin:0 0 16px;
-  font-size:clamp(19px,3vw,25px);
-  line-height:1.43;
+  margin:0 0 18px;
+  font-size:inherit;
+  font-weight:400;
+  line-height:inherit;
   letter-spacing:0}
 .answer-options {
   display:grid;
-  gap:8px}
+  gap:4px;
+  margin:auto 0 clamp(14px,4.5vw,23px)}
 .answer-option {
   position:relative;
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:13px;
   min-height:48px;
-  padding:7px 12px;
-  border:1px solid #cdd7cf;
-  border-radius:8px;
-  background:white;
+  padding:6px;
+  border:1px solid transparent;
+  border-radius:6px;
   cursor:pointer;
-  line-height:1.4}
+  line-height:1.22}
 .answer-option input {
   position:absolute;
   width:1px;
   height:1px;
   opacity:0}
 .answer-letter {
-  display:grid;
-  place-items:center;
-  flex:0 0 30px;
-  height:30px;
-  border-radius:6px;
-  color:var(--subject);
-  background:var(--subject-tint);
-  font-size:14px;
-  font-weight:750}
+  flex:0 0 16px;
+  color:var(--card-color);
+  font-weight:700}
 @media(hover:hover) {
-  .answer-option:not(.is-locked):hover {
-    border-color:var(--subject);
-    background:var(--subject-tint)}
+  .answer-option:hover {
+    border-color:var(--card-color);
+    background:var(--card-tint)}
 }
 .answer-option:has(input:focus-visible) {
   outline:3px solid #b86a15;
   outline-offset:2px}
 .answer-option:has(input:checked) {
-  border-color:var(--subject);
-  background:var(--subject-tint);
-  box-shadow:inset 0 0 0 1px var(--subject)}
-.answer-option.is-locked {
-  cursor:default}
-.answer-option.is-correct {
-  border-color:var(--green);
-  background:#e9f3e7;
-  box-shadow:inset 0 0 0 1px var(--green)}
-.answer-option.is-incorrect {
-  border-color:var(--wine);
-  background:#f9edef;
-  box-shadow:inset 0 0 0 1px var(--wine)}
-.answer-option.is-correct::after,.answer-option.is-incorrect::after {
-  margin-left:auto;
-  font-weight:750}
-.answer-option.is-correct::after {
-  content:"✓" / "";
-  color:var(--green)}
-.answer-option.is-incorrect::after {
-  content:"×" / "";
-  color:var(--wine)}
+  border-color:var(--card-color);
+  background:var(--card-tint);
+  box-shadow:inset 0 0 0 1px var(--card-color)}
 .quiz-action {
   width:100%;
   margin-top:14px;
@@ -685,26 +658,57 @@ footer .brand {
   opacity:1}
 .challenge-page [hidden] {
   display:none}
-.feedback {
-  border-top:1px solid var(--line);
-  margin-top:17px;
-  padding-top:16px}
-.feedback h3 {
-  font-size:19px;
+.quiz-back {
+  justify-content:space-between;
+  gap:18px}
+.card-answer {
+  display:grid;
+  gap:3px;
+  margin:0 0 5px;
+  padding-bottom:14px;
+  border-bottom:2px solid var(--card-color);
+  color:var(--card-color);
+  font-size:clamp(29px,9vw,43px);
+  font-weight:700;
+  line-height:1.05;
   letter-spacing:0;
-  margin:0 0 8px}
-.feedback p,.clue p {
+  text-align:center}
+.card-answer-label,.quiz-back h3 {
+  color:var(--card-color);
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:0;
+  text-transform:uppercase}
+#correct-answer.is-short {
+  font-size:clamp(40px,13vw,54px)}
+.quiz-back h3 {
+  margin:0 0 5px}
+.quiz-back p {
   margin:0}
 .clue {
-  margin-top:13px;
-  padding:11px 13px;
-  border:1px solid #b0c5af;
+  padding:10px;
+  border:1px solid var(--card-color);
   border-radius:7px;
-  background:#edf3ea}
-.clue strong {
+  background:var(--card-tint);
+  font-size:16px}
+.answer-outcome {
+  margin:10px 0 0;
+  color:var(--wine);
+  font-size:14px;
+  font-weight:700;
+  text-align:center}
+.answer-outcome.is-correct {
   color:var(--green);
-  font-size:12px;
-  letter-spacing:.08em}
+}
+.visually-hidden {
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip-path:inset(50%);
+  white-space:nowrap}
 [tabindex="-1"] {
   scroll-margin-top:16px}
 html:has(.challenge-page) {
@@ -794,19 +798,10 @@ nav>a:not(.button):not(.back-home):not(.nav-challenge) {
 .hero-action {
   width:100%}
 .preview-stage {
-  padding:14px;
-  place-items:stretch}
-.question-preview {
-  width:100%;
-  padding:13px 15px;
-  border-width:3px;
-  border-radius:12px;
-  box-shadow:3px 4px 0 #b2bfac}
-.preview-header {
-  margin-bottom:8px;
-  padding-bottom:5px}
-.question-preview > p {
-  margin-bottom:10px}
+  padding:12px}
+.preview-stage img {
+  width:min(100%,174px);
+  border-radius:10px}
 h1 {
   font-size:56px;
   letter-spacing:-2.5px}
@@ -876,12 +871,6 @@ footer {
 .hero-action {
   gap:12px;
   padding:11px 8px}
-.preview-choices {
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:5px}
-.preview-choices li {
-  gap:5px;
-  padding-inline:6px}
 h1 {
   font-size:49px}
 .product-name {

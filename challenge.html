@@ -38,25 +38,34 @@
         <progress id="progress" max="5" aria-label="Questions answered"></progress>
       </div>
       <article class="quiz-card" id="quiz-card">
-        <div class="quiz-meta">
-          <span id="subject"></span>
-          <span id="topic"></span>
-        </div>
-        <form id="answer-form">
+        <form class="quiz-front" id="answer-form">
+          <div class="quiz-meta">
+            <span id="topic"></span>
+            <span id="card-number"></span>
+            <span id="subject"></span>
+          </div>
           <h2 id="prompt" tabindex="-1"></h2>
           <div class="answer-options" id="answers" role="radiogroup" aria-labelledby="prompt"></div>
-          <button class="button quiz-action" id="check-answer" type="submit" disabled>Check Answer</button>
         </form>
-        <div class="feedback" id="feedback" hidden>
-          <h3 tabindex="-1" id="feedback-title"></h3>
-          <p id="explanation"></p>
+        <div class="quiz-back" id="feedback" hidden>
+          <h2 class="card-answer" id="feedback-title" tabindex="-1">
+            <span class="card-answer-label" aria-hidden="true">Answer</span>
+            <span class="visually-hidden" id="answer-announcement"></span>
+            <span id="correct-answer"></span>
+          </h2>
+          <div>
+            <h3>Why?</h3>
+            <p id="explanation"></p>
+          </div>
           <div class="clue">
-            <strong>CLUE</strong>
+            <h3>Clue</h3>
             <p id="clue"></p>
           </div>
-          <button class="button quiz-action" id="next" type="button">Next Question</button>
         </div>
       </article>
+      <p class="answer-outcome" id="answer-outcome" aria-hidden="true" hidden></p>
+      <button class="button quiz-action" id="check-answer" type="submit" form="answer-form" disabled>Check Answer</button>
+      <button class="button quiz-action" id="next" type="button" hidden>Next Question</button>
     </section>
     <section id="results" class="results" aria-labelledby="result-title" hidden>
       <div class="score-panel">

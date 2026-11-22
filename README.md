@@ -8,7 +8,9 @@ Serve the repository root with a static HTTP server. For example, run `python -m
 
 ## SAT Challenge
 
-`challenge-questions.js` holds the question pool. Math cards 001–005 and 007 and Reading & Writing cards 001–004 and 006 were transcribed from the GarrettPrep print master. Keep card IDs stable and preserve the printed wording. Each attempt uses five distinct cards with either two or three from each subject. The homepage preview uses Math 004 and carries that card into the first round. If that preview card changes, update both the markup in `index.html` and `introQuestion` in `challenge.js`.
+`challenge-questions.js` holds the question pool. Math cards 001–005 and 007 and Reading & Writing cards 001–004 and 006 were transcribed from the GarrettPrep print master. Keep card IDs stable and preserve the printed wording. Each attempt uses five distinct cards with either two or three from each subject. The homepage displays the Math 004 artwork and carries that card into the first round. If that preview card changes, update the artwork and alternative text in `index.html` and `introQuestion` in `challenge.js`.
+
+The digital cards use self-hosted [Comic Neue](https://github.com/google/fonts/tree/main/ofl/comicneue). Its license is in `assets/comic-neue-license.txt`.
 
 Progress is stored in the current browser tab. No account or email address is required for the challenge.
 

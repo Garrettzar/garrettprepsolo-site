@@ -21,7 +21,9 @@ const prompt = get("prompt");
 const answers = get("answers");
 const form = get("answer-form");
 const check = get("check-answer");
+const card = get("quiz-card");
 const feedback = get("feedback");
+const outcome = get("answer-outcome");
 const next = get("next");
 const fromHome = new URLSearchParams(location.search).get("from") === "home";
 let attempt;
@@ -86,9 +88,13 @@ function renderQuestion(moveFocus) {
   results.hidden = true;
   get("question-count").textContent = `Question ${attempt.index + 1} of ${size}`;
   get("progress").value = attempt.submitted.length;
-  get("quiz-card").classList.toggle("is-reading", question.subject === "Reading & Writing");
+  card.classList.toggle("is-reading", question.subject === "Reading & Writing");
+  card.classList.remove("is-revealed");
   get("subject").textContent = question.subject;
-  get("topic").textContent = question.topic;
+  const topic = get("topic");
+  topic.textContent = question.topic;
+  topic.classList.toggle("is-long", question.topic.length > 20);
+  get("card-number").textContent = `No. ${question.id.split("-").at(-1)}`;
   prompt.textContent = question.prompt;
   answers.replaceChildren(...question.choices.map((choice, index) => {
     const label = document.createElement("label");
@@ -106,9 +112,12 @@ function renderQuestion(moveFocus) {
     label.append(input, letter, text);
     return label;
   }));
+  form.hidden = submitted;
   check.hidden = submitted;
   check.disabled = attempt.selected === null;
   feedback.hidden = !submitted;
+  outcome.hidden = !submitted;
+  next.hidden = !submitted;
   if (submitted) reveal(question, false);
   if (moveFocus) prompt.focus();
 }
@@ -116,21 +125,25 @@ function renderQuestion(moveFocus) {
 function reveal(question, moveFocus) {
   const choice = attempt.submitted[attempt.index];
   const correct = choice === question.answer;
-  [...answers.children].forEach((option, index) => {
-    option.firstElementChild.disabled = true;
-    option.classList.add("is-locked");
-    option.classList.toggle("is-correct", index === question.answer);
-    option.classList.toggle("is-incorrect", index === choice && !correct);
-  });
+  card.classList.add("is-revealed");
   get("progress").value = attempt.submitted.length;
-  const title = get("feedback-title");
-  title.textContent = `${correct ? "Correct." : "Not quite."} The answer is ${letters[question.answer]}, ${question.choices[question.answer]}`;
+  get("answer-announcement").textContent = correct
+    ? "Correct. The answer is "
+    : `Incorrect. You chose ${letters[choice]}. The answer is `;
+  const answer = get("correct-answer");
+  answer.textContent = `${letters[question.answer]}. ${question.choices[question.answer]}`;
+  answer.classList.toggle("is-short", answer.textContent.length <= 10);
   get("explanation").textContent = question.explanation;
   get("clue").textContent = question.clue;
   next.textContent = attempt.index === size - 1 ? "See Results" : "Next Question";
+  outcome.textContent = correct ? "Correct!" : `Incorrect · You chose ${letters[choice]}`;
+  outcome.classList.toggle("is-correct", correct);
+  form.hidden = true;
   check.hidden = true;
   feedback.hidden = false;
-  if (moveFocus) title.focus();
+  outcome.hidden = false;
+  next.hidden = false;
+  if (moveFocus) get("feedback-title").focus();
 }
 
 function renderResults(moveFocus) {
