@@ -1,31 +1,23 @@
-# GarrettPrep Static Site
+# GarrettPrep
 
-Simple one-page static website for GarrettPrep, built with plain HTML, CSS, and JavaScript.
+A static HTML, CSS, and JavaScript site hosted on Netlify.
 
-## Opening locally
+## Preview locally
 
-Open `index.html` directly in a browser, or serve this folder with any basic static file server.
+Serve the repository root with a static HTTP server. For example, run `python -m http.server 8000` from the root and open [the homepage](http://localhost:8000/) or [the SAT Challenge](http://localhost:8000/challenge.html). Use the Netlify Deploy Preview to verify hosted form handling.
 
-## Deploying as a static site
+## SAT Challenge
 
-Upload the full folder contents to any static host, such as GitHub Pages, Netlify, Vercel static hosting, or a basic web server. No backend, database, build step, or package install is required.
+`challenge-questions.js` holds the question pool. Math cards 001–005 and 007 and Reading & Writing cards 001–004 and 006 were transcribed from the GarrettPrep print master. Keep card IDs stable and preserve the printed wording. Each attempt uses five distinct cards with either two or three from each subject. The homepage preview uses Math 004 and carries that card into the first round. If that preview card changes, update both the markup in `index.html` and `introQuestion` in `challenge.js`.
 
-## Replacing the hero image
+Progress is stored in the current browser tab. No account or email address is required for the challenge.
 
-Replace `assets/garrett-zaremba-sat-tutor.jpg` with a new optimized image using the same filename. To use a different filename, update the image path in `index.html`.
+## Waitlist and checkout
 
-## Changing the contact email
+The homepage uses the existing `deck-launch` Netlify form, including its consent field, honeypot, and privacy link. Preview and production share the site's form dataset.
 
-Update the FormSubmit destination in `index.html`:
+With `purchaseEnabled` off in `product-config.js`, the results CTA links to the waitlist. When checkout is ready, set `ctaHref` to the real HTTPS checkout destination, set the desired `ctaLabel`, and then enable purchasing. Purchase and fulfillment details are managed separately.
 
-```html
-<form action="https://formsubmit.co/garrettprep@gmail.com" method="POST">
-```
+## Measurement
 
-Also update the visible email links in the contact section and footer.
-
-FormSubmit may send a one-time confirmation email before the form begins delivering inquiries.
-
-## Updating the price
-
-Search `index.html` for `$55` and update the hero note, pricing card, and meta description as needed.
+There are no analytics requests. A configured first-party listener can subscribe to the document events `garrettprep:challenge-start`, `garrettprep:challenge-complete`, `garrettprep:results-product-click`, and `garrettprep:waitlist-conversion`. These events carry no personal information. Netlify Forms already records waitlist submissions. Purchase confirmation would come from the future checkout integration.

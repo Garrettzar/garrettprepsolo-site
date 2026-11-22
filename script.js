@@ -1,10 +1,5 @@
 "use strict";
 const config = window.GARRETTPREP_PRODUCT;
-document.querySelectorAll("[data-launch-cta]").forEach(link => {
-  link.textContent = config.ctaLabel;
-  link.href = config.ctaHref;
-});
-document.querySelectorAll("[data-availability]").forEach(el => el.textContent = config.availability);
 document.querySelectorAll("[data-fulfillment]").forEach(el => el.textContent = config.fulfillment);
 
 // Preserve useful entry points from the former tutoring homepage.
@@ -54,6 +49,7 @@ if (form) form.addEventListener("submit", async event => {
     if (!response.ok) throw new Error("Submission failed");
     form.reset();
     status.textContent = "You’re on the list. Thank you for being part of GarrettPrep!";
+    document.dispatchEvent(new Event("garrettprep:waitlist-conversion"));
   } catch {
     status.textContent = "We couldn’t save your signup. Please try again, or email garrettprep@gmail.com.";
   } finally {
