@@ -22,6 +22,7 @@ const answers = get("answers");
 const form = get("answer-form");
 const check = get("check-answer");
 const card = get("quiz-card");
+const flip = get("quiz-flip");
 const feedback = get("feedback");
 const outcome = get("answer-outcome");
 const next = get("next");
@@ -89,7 +90,8 @@ function renderQuestion(moveFocus) {
   get("question-count").textContent = `Question ${attempt.index + 1} of ${size}`;
   get("progress").value = attempt.submitted.length;
   card.classList.toggle("is-reading", question.subject === "Reading & Writing");
-  card.classList.remove("is-revealed");
+  card.classList.remove("is-checked");
+  flip.hidden = true;
   get("subject").textContent = question.subject;
   const topic = get("topic");
   topic.textContent = question.topic;
@@ -112,20 +114,27 @@ function renderQuestion(moveFocus) {
     label.append(input, letter, text);
     return label;
   }));
-  form.hidden = submitted;
+  showCardSide(false);
   check.hidden = submitted;
   check.disabled = attempt.selected === null;
-  feedback.hidden = !submitted;
   outcome.hidden = !submitted;
   next.hidden = !submitted;
   if (submitted) reveal(question, false);
   if (moveFocus) prompt.focus();
 }
 
+function showCardSide(showAnswer) {
+  card.classList.toggle("is-revealed", showAnswer);
+  form.hidden = showAnswer;
+  feedback.hidden = !showAnswer;
+  flip.setAttribute("aria-label", showAnswer ? "Flip to the question" : "Flip to the answer");
+}
+
 function reveal(question, moveFocus) {
   const choice = attempt.submitted[attempt.index];
   const correct = choice === question.answer;
-  card.classList.add("is-revealed");
+  card.classList.add("is-checked");
+  answers.querySelectorAll("input").forEach(input => { input.disabled = true; });
   get("progress").value = attempt.submitted.length;
   get("answer-announcement").textContent = correct
     ? "Correct. The answer is "
@@ -138,13 +147,17 @@ function reveal(question, moveFocus) {
   next.textContent = attempt.index === size - 1 ? "See Results" : "Next Question";
   outcome.textContent = correct ? "Correct!" : `Incorrect · You chose ${letters[choice]}`;
   outcome.classList.toggle("is-correct", correct);
-  form.hidden = true;
+  showCardSide(true);
+  flip.hidden = false;
   check.hidden = true;
-  feedback.hidden = false;
   outcome.hidden = false;
   next.hidden = false;
   if (moveFocus) get("feedback-title").focus();
 }
+
+flip.addEventListener("click", () => {
+  showCardSide(!card.classList.contains("is-revealed"));
+});
 
 function renderResults(moveFocus) {
   round.hidden = true;

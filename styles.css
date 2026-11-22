@@ -559,9 +559,11 @@ footer .brand {
 .quiz-card {
   --card-color:#153c69;
   --card-tint:#edf3f8;
+  --card-border:clamp(7px,2.1vw,11px);
+  position:relative;
   display:grid;
   aspect-ratio:7 / 10;
-  border:clamp(7px,2.1vw,11px) solid var(--card-color);
+  border:var(--card-border) solid var(--card-color);
   border-radius:19px;
   padding:clamp(10px,3.25vw,17px);
   background:#fff;
@@ -580,7 +582,18 @@ footer .brand {
 .quiz-front,.quiz-back {
   display:flex;
   flex-direction:column;
+  grid-area:1 / 1;
   min-width:0}
+.quiz-card.is-checked > :is(.quiz-front,.quiz-back)[hidden] {
+  display:flex;
+  visibility:hidden}
+.quiz-flip {
+  position:absolute;
+  inset:calc(-1 * var(--card-border));
+  border:0;
+  border-radius:inherit;
+  background:transparent;
+  cursor:pointer}
 .quiz-meta {
   display:grid;
   grid-template-columns:minmax(0,1fr) auto;
