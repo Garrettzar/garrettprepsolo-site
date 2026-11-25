@@ -7,10 +7,10 @@ const size = 5;
 const storageKey = "garrettprep-challenge-v1";
 const introQuestion = "math-004";
 const resultMessages = [
-  "Want a rematch?",
-  "Want a rematch?",
+  "Good thing you already graduated.",
+  "Good thing you already graduated.",
   "A rematch might be necessary.",
-  "Ready to challenge someone?",
+  "Your teenager should be mildly concerned.",
   "Someone’s been doing their homework.",
   "The SAT fears you."
 ];
