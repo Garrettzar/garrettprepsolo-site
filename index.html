@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="styles.css">
 <script src="product-config.js" defer>
 </script>
+<script src="launch.js" defer></script>
 <script src="script.js" defer>
 </script>
 </head>
@@ -30,7 +31,7 @@
 <nav aria-label="Main navigation">
 <a class="nav-challenge" href="challenge.html">Free Challenge</a>
 <a href="#inside">The deck</a>
-<a class="button button-outline small" href="#launch">Join the Waitlist</a>
+<a class="button button-outline small" href="#launch">Get First Access</a>
 </nav>
 </div>
 </header>
@@ -42,13 +43,13 @@
 <p class="tagline">Study Solo. Play Together.</p>
 <div class="hero-invitation">
 <h2>Think you can beat your teen on the SAT?</h2>
-<p>5 questions. 2 minutes. Bragging rights on the line.</p>
+<p>5 questions. 2 minutes. Play online free, no email needed.</p>
 </div>
 </div>
-<figure class="preview-stage">
+<a class="preview-stage" href="challenge.html?from=home" aria-label="Take the Free SAT Challenge">
 <img src="assets/math-front.webp" width="525" height="751" alt="GarrettPrep Algebra card 004. If 2x + 3y = 17 and 3x − y = 8, what is the value of 5x + 2y? A: 9. B: 17. C: 25. D: 34.">
-</figure>
-<a class="button hero-action" href="challenge.html?from=home">Take the Free SAT Challenge <span aria-hidden="true">→</span></a>
+<span class="button preview-action">Take the Free SAT Challenge <span aria-hidden="true">→</span></span>
+</a>
 </section>
 <div class="deck-count">
 <div class="wrap">
@@ -209,14 +210,19 @@
 <section class="launch section" id="launch">
 <div class="wrap launch-grid">
 <div>
-<p class="eyebrow">Something good is in the cards</p>
-<h2>SAT prep is about to<br>get a lot more fun.</h2>
-<p>Join the waitlist to hear when the GarrettPrep SAT Prep Deck is ready to order.</p>
+
+<h2>Get first access to the GarrettPrep SAT Prep Deck.</h2>
+<p>Join the launch list for pricing, ordering details, and confirmed availability.</p>
 <p class="quiet" data-fulfillment>Launch timing and shipping details will be announced.</p>
 </div>
 <div class="form-panel">
 <form name="deck-launch" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you" id="launch-form">
 <input type="hidden" name="form-name" value="deck-launch">
+<input type="hidden" name="utm_source" value="">
+<input type="hidden" name="utm_medium" value="">
+<input type="hidden" name="utm_campaign" value="">
+<input type="hidden" name="utm_content" value="">
+<input type="hidden" name="signup_location" value="homepage">
 <p hidden>
 <label>Leave this blank <input name="bot-field" tabindex="-1" autocomplete="off">
 </label>
@@ -227,7 +233,7 @@
 <input type="checkbox" name="consent" value="Yes — send me GarrettPrep deck and launch updates" required>
 <span>I agree to receive GarrettPrep deck and launch updates by email.</span>
 </label>
-<button class="button" type="submit">Join the Waitlist</button>
+<button class="button" type="submit">Get First Access</button>
 <p class="form-status" id="form-status" role="status" aria-live="polite">
 </p>
 <p class="quiet">Opt out anytime. <a href="privacy.html">How we use your email</a>
