@@ -9,7 +9,7 @@ const introQuestion = "math-004";
 const resultMessages = [
   "Good thing you already graduated.",
   "Good thing you already graduated.",
-  "A rematch might be necessary.",
+  "Your teen wasn’t being dramatic. This thing is hard.",
   "Your teenager should be mildly concerned.",
   "Someone’s been doing their homework.",
   "The SAT fears you."
