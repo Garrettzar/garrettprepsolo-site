@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="product-config.js" defer></script>
   <script src="challenge-questions.js" defer></script>
+  <script src="launch.js" defer></script>
   <script src="challenge.js" defer></script>
 </head>
 <body class="challenge-page">
@@ -87,15 +88,42 @@
       </div>
       <article class="results-deck">
         <div>
-          <h3>Take the challenge to the table.</h3>
-          <p>The 120-card GarrettPrep SAT Prep Deck makes a gift for teens and a screen-free game for the family. Study solo or play together, with answers, explanations, and clues on the study cards.</p>
-          <a class="button" id="product-cta" href="./#launch">Join the Waitlist <span aria-hidden="true">→</span></a>
+          <h3>Want to bring these questions to your kitchen table?</h3>
+          <p>The physical SAT Prep Deck includes 100 practice questions. Draw a card, solve it, then flip for the explanation and a clue to remember. Study solo or challenge your family.</p>
+          <a class="button" id="product-cta" hidden></a>
         </div>
         <figure class="deck-art" aria-label="GarrettPrep study and gameplay card artwork">
           <img src="assets/reading-front.webp" width="525" height="750" alt="" loading="lazy">
           <img src="assets/game-front-v4.webp" width="525" height="750" alt="" loading="lazy">
           <img src="assets/math-front.webp" width="525" height="750" alt="" loading="lazy">
         </figure>
+        <div class="form-panel result-signup">
+          <h3>Get first access to the SAT Prep Deck</h3>
+          <p>Join the launch list for pricing and ordering details as soon as they’re confirmed. Free to join. Pricing and shipping dates are still being finalized.</p>
+<form name="deck-launch" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you" id="launch-form">
+<input type="hidden" name="form-name" value="deck-launch">
+<input type="hidden" name="utm_source" value="">
+<input type="hidden" name="utm_medium" value="">
+<input type="hidden" name="utm_campaign" value="">
+<input type="hidden" name="utm_content" value="">
+<input type="hidden" name="signup_location" value="challenge-results">
+<p hidden>
+<label>Leave this blank <input name="bot-field" tabindex="-1" autocomplete="off">
+</label>
+</p>
+<label for="email">Your email address</label>
+<input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required maxlength="254">
+<label class="consent">
+<input type="checkbox" name="consent" value="Yes — send me GarrettPrep deck and launch updates" required>
+<span>I agree to receive GarrettPrep deck and launch updates by email.</span>
+</label>
+<button class="button" type="submit">Get First Access</button>
+<p class="form-status" id="form-status" role="status" aria-live="polite">
+</p>
+<p class="quiet">Opt out anytime. <a href="privacy.html">How we use your email</a>
+</p>
+</form>
+        </div>
       </article>
     </section>
   </main>

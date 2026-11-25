@@ -9,7 +9,7 @@ const introQuestion = "math-004";
 const resultMessages = [
   "Good thing you already graduated.",
   "Good thing you already graduated.",
-  "A rematch might be necessary.",
+  "Your teen wasn’t being dramatic. This thing is hard.",
   "Your teenager should be mildly concerned.",
   "Someone’s been doing their homework.",
   "The SAT fears you."
@@ -54,7 +54,7 @@ function newAttempt(preview = false) {
   if (preview) selected.unshift(introQuestion);
   attempt = { ids: selected, index: 0, submitted: [], selected: null, preview };
   save();
-  track("garrettprep:challenge-start");
+
 }
 
 function restore() {
@@ -167,15 +167,17 @@ function renderResults(moveFocus) {
   get("result-score").textContent = `${score} out of ${size} correct`;
   const title = get("result-title");
   title.textContent = resultMessages[score];
+  const missed = attempt.ids.map(id => byId.get(id)).find((q, i) => q.answer !== attempt.submitted[i]);
   get("takeaway").textContent = score === size
     ? "Try explaining a clue in your own words. Teaching the shortcut helps you remember it."
-    : "On your next round, pick one clue to remember and look for a question where it applies.";
+    : `One to remember for round two: ${missed.clue}`;
   get("share-status").textContent = "";
   get("share-fallback").hidden = true;
   if (moveFocus) title.focus();
 }
 
 answers.addEventListener("change", event => {
+  if (attempt.index === 0 && attempt.selected === null) track("garrettprep:challenge-start");
   attempt.selected = Number(event.target.value);
   check.disabled = false;
   save();
@@ -237,6 +239,7 @@ if (product?.purchaseEnabled && product.ctaHref) {
   try {
     const checkout = new URL(product.ctaHref, new URL("./", location.href));
     if (checkout.protocol === "https:" && checkout.href !== productCta.href && !product.ctaHref.trim().startsWith("#")) {
+      productCta.hidden = false;
       productCta.href = checkout.href;
       productCta.textContent = product.ctaLabel;
     }

@@ -31,28 +31,3 @@ document.querySelectorAll(".card-flip[data-flip]").forEach(button => {
     button.classList.toggle("is-flipped", flipped);
   });
 });
-
-const form = document.getElementById("launch-form");
-if (form) form.addEventListener("submit", async event => {
-  event.preventDefault();
-  if (!form.reportValidity()) return;
-  const button = form.querySelector("button");
-  const status = document.getElementById("form-status");
-  button.disabled = true;
-  status.textContent = "Submitting…";
-  try {
-    const response = await fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(new FormData(form)).toString()
-    });
-    if (!response.ok) throw new Error("Submission failed");
-    form.reset();
-    status.textContent = "You’re on the list. Thank you for being part of GarrettPrep!";
-    document.dispatchEvent(new Event("garrettprep:waitlist-conversion"));
-  } catch {
-    status.textContent = "We couldn’t save your signup. Please try again, or email garrettprep@gmail.com.";
-  } finally {
-    button.disabled = false;
-  }
-});
