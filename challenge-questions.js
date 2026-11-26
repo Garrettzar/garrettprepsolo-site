@@ -1,6 +1,8 @@
 "use strict";
 
-// Transcribed from the GarrettPrep print master. Answer indexes run from 0 (A) to 3 (D).
+// Original questions and Math 008–011 reflect the GarrettPrep print-master/review proofs.
+// Reading & Writing 013–017 are new online-preview drafts pending owner editorial approval.
+// Answer indexes run from 0 (A) to 3 (D).
 window.GARRETTPREP_QUESTIONS = [
   {
     id: "math-001", subject: "Math", topic: "Algebra",
@@ -89,5 +91,78 @@ window.GARRETTPREP_QUESTIONS = [
     answer: 2,
     explanation: "Two complete sentences are connected by “however.” The semicolon separates the sentences, and the comma follows the transition.",
     clue: "Full sentence; however, full sentence."
+  },
+  // Additional approved Math proofs (008–011) and preview-only Reading & Writing drafts (013–017).
+  {
+    id: "math-008", subject: "Math", topic: "Advanced Math",
+    prompt: "A quantity starts at 200 and decreases by 15% each hour. Which expression gives the amount remaining after t hours?",
+    choices: ["200(0.15)^t","200(1.15)^t","200(0.85t)","200(0.85)^t"],
+    answer: 3,
+    explanation: "A 15% decrease leaves 85% each hour. Multiply by 0.85 once for each elapsed hour, giving 200(0.85)^t.",
+    clue: "Repeated percent change is exponential. For decay, the base is 1 minus the percent rate."
+  },
+  {
+    id: "math-009", subject: "Math", topic: "Problem-Solving & Data Analysis",
+    prompt: "The values 2, 4, 4, 6, and 9 are each increased by 3. Which statistic stays the same?",
+    choices: ["Mean","Median","Range","Maximum"],
+    answer: 2,
+    explanation: "Adding 3 shifts both the highest and lowest values by 3, so their difference (the range) stays unchanged. Mean, median, and maximum all increase by 3.",
+    clue: "Adding the same constant changes a data set's location, not its spread."
+  },
+  {
+    id: "math-010", subject: "Math", topic: "Geometry & Trigonometry",
+    prompt: "A circle has radius 6. A central angle measures 120°. What is the length of its intercepted arc?",
+    choices: ["2π","4π","6π","12π"],
+    answer: 1,
+    explanation: "The angle is 120/360 = 1/3 of a full circle. The circumference is 2π(6) = 12π, so the arc length is 4π.",
+    clue: "Arc length = central-angle fraction × circumference."
+  },
+  {
+    id: "math-011", subject: "Math", topic: "Advanced Math",
+    prompt: "A quadratic f(x) = x² + bx + c satisfies f(2) = f(8) and has a minimum value of 4. What is c?",
+    choices: ["21","25","29","33"],
+    answer: 2,
+    explanation: "Since f(2) = f(8), the vertex lies halfway between 2 and 8, at x = 5. The minimum is 4, so f(x) = (x − 5)² + 4. Therefore, c = f(0) = 25 + 4 = 29.",
+    clue: "Equal quadratic outputs locate the axis of symmetry halfway between their inputs. Use the minimum to write vertex form."
+  },
+  {
+    id: "rw-013", subject: "Reading & Writing", topic: "Grammar",
+    prompt: "Each of the three research teams _____ responsible for submitting a final report.",
+    choices: ["are","is","were","have been"],
+    answer: 1,
+    explanation: "The subject is “Each,” which is singular. The phrase “of the three research teams” does not change the verb to plural.",
+    clue: "Find the true subject before choosing a verb. “Each” takes a singular verb."
+  },
+  {
+    id: "rw-014", subject: "Reading & Writing", topic: "Transitions",
+    prompt: "The library extended its evening hours. _____, more students were able to study there after sports practice.",
+    choices: ["As a result","However","For example","In contrast"],
+    answer: 0,
+    explanation: "The second sentence describes an effect of the library staying open later. “As a result” correctly signals that cause-and-effect relationship.",
+    clue: "Ask how the ideas connect: cause and effect, contrast, or example?"
+  },
+  {
+    id: "rw-015", subject: "Reading & Writing", topic: "Words in Context",
+    prompt: "The scientist's explanation was _____: even students without a background in chemistry could follow every step.",
+    choices: ["obscure","accessible","tentative","contradictory"],
+    answer: 1,
+    explanation: "The students could easily follow the explanation, so “accessible,” meaning easy to understand, best fits the context.",
+    clue: "Use the words after the colon to predict the meaning before checking the choices."
+  },
+  {
+    id: "rw-016", subject: "Reading & Writing", topic: "Grammar",
+    prompt: "Which choice most logically completes the sentence? Walking through the aquarium, _____.",
+    choices: ["the colorful fish caught Maya's attention","Maya noticed the colorful fish","the tanks appeared enormous","the sound of water echoed"],
+    answer: 1,
+    explanation: "The opening phrase describes someone walking. “Maya” must be the subject of the main clause so the sentence clearly identifies who was walking.",
+    clue: "An opening modifying phrase should describe the person or thing named immediately after it."
+  },
+  {
+    id: "rw-017", subject: "Reading & Writing", topic: "Transitions",
+    prompt: "Most deserts receive very little rain. _____, some support a surprising variety of plants that store water in their stems or leaves.",
+    choices: ["Consequently","Similarly","Nevertheless","For instance"],
+    answer: 2,
+    explanation: "Although deserts receive little rain, some still support many plants. “Nevertheless” signals this unexpected contrast.",
+    clue: "If the second idea is surprising despite the first, look for a contrast transition."
   }
 ];
