@@ -5,7 +5,6 @@ const byId = new Map(questions.map(question => [question.id, question]));
 const letters = ["A", "B", "C", "D"];
 const size = 5;
 const storageKey = "garrettprep-challenge-v1";
-const introQuestion = "math-004";
 const resultMessages = [
   "Good thing you already graduated.",
   "Good thing you already graduated.",
@@ -43,18 +42,48 @@ function shuffle(items) {
   return shuffled;
 }
 
-function newAttempt(preview = false) {
-  const mathCount = Math.random() < 0.5 ? 2 : 3;
-  const math = shuffle(questions.filter(q => q.subject === "Math" && (!preview || q.id !== introQuestion)));
-  const reading = shuffle(questions.filter(q => q.subject === "Reading & Writing"));
-  const selected = shuffle([
-    ...math.slice(0, mathCount - Number(preview)),
-    ...reading.slice(0, size - mathCount)
-  ]).map(question => question.id);
-  if (preview) selected.unshift(introQuestion);
-  attempt = { ids: selected, index: 0, submitted: [], selected: null, preview };
-  save();
+// Keep the last two rounds' question IDs so replays favor cards not seen recently.
+// This stores only question IDs, never answers, scores, or personal information.
+const recentQuestionsKey = "garrettprep-recent-questions-v1";
+function readRecentQuestions() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(recentQuestionsKey));
+    return Array.isArray(saved) ? saved.filter(id => byId.has(id)).slice(-10) : [];
+  } catch {
+    return [];
+  }
+}
 
+function rememberQuestions(ids) {
+  try {
+    localStorage.setItem(recentQuestionsKey, JSON.stringify([...readRecentQuestions(), ...ids].slice(-10)));
+  } catch {
+    // The quiz works without browser storage, with ordinary random selection.
+  }
+}
+
+function newAttempt() {
+  const mathCount = Math.random() < 0.5 ? 2 : 3;
+  const recentlySeen = new Set(readRecentQuestions());
+  const pick = (subject, count) => {
+    const pool = shuffle(questions.filter(q => q.subject === subject));
+    // Recently seen questions come after unseen ones, with randomness within each group.
+    pool.sort((a, b) => Number(recentlySeen.has(a.id)) - Number(recentlySeen.has(b.id)));
+    const chosen = pool.slice(0, count);
+    // Show a broader Reading & Writing mix instead of an all-punctuation round.
+    if (subject === "Reading & Writing" && chosen.every(q => q.topic === "Punctuation")) {
+      const alternate = pool.find(q => q.topic !== "Punctuation" && !chosen.some(selected => selected.id === q.id));
+      if (alternate) chosen[chosen.length - 1] = alternate;
+    }
+    return chosen.map(q => q.id);
+  };
+  const selected = shuffle([
+    ...pick("Math", mathCount),
+    ...pick("Reading & Writing", size - mathCount)
+  ]);
+  attempt = { ids: selected, index: 0, submitted: [], selected: null, preview: false };
+  save();
+  rememberQuestions(selected);
 }
 
 function restore() {
@@ -67,7 +96,7 @@ function restore() {
     if (submitted.length < index || submitted.length > Math.min(index + 1, size)) return null;
     if (!submitted.every(choice => letters[choice] && Number.isInteger(choice))) return null;
     if (selected !== null && (!Number.isInteger(selected) || !letters[selected])) return null;
-    if (fromHome && !preview) return null;
+    if (fromHome && index === size) return null;
     return stored;
   } catch {
     return null;
@@ -250,6 +279,6 @@ if (product?.purchaseEnabled && product.ctaHref) {
 productCta.addEventListener("click", () => track("garrettprep:results-product-click"));
 
 attempt = restore();
-if (!attempt) newAttempt(fromHome);
+if (!attempt) newAttempt();
 if (attempt.index === size) renderResults(false);
 else renderQuestion(false);
