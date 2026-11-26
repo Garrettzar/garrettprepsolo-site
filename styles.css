@@ -955,3 +955,35 @@ footer {
   .hero {grid-template-areas:"copy" "preview"}
   .preview-action {width:100%}
 }
+
+/* Responsive two-card sample on the challenge invitation. These are the real approved card assets. */
+.preview-stage .preview-deck {
+  display:block;
+  position:relative;
+  width:min(100%,360px);
+  aspect-ratio:10 / 9;
+  isolation:isolate;
+}
+.preview-stage .preview-deck .preview-card {
+  position:absolute;
+  display:block;
+  width:56%;
+  max-width:none;
+  height:auto;
+  border-radius:11px;
+  box-shadow:0 15px 26px #233c303b;
+}
+.preview-stage .preview-card-reading {
+  left:6%;
+  top:7%;
+  transform:rotate(-9deg);
+}
+.preview-stage .preview-card-math {
+  right:6%;
+  top:0;
+  transform:rotate(9deg);
+}
+@media(max-width:540px) {
+  .preview-stage .preview-deck {width:min(100%,290px)}
+  .preview-stage .preview-deck .preview-card {border-radius:9px}
+}
